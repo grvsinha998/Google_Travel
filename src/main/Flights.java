@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("deprecation")
 public class Flights {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         System.setProperty("webdriver.chrome.driver", "/Users/gauravsinha/Downloads/chromedriver");
         WebDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -48,7 +48,6 @@ public class Flights {
         }
 
     }
-
     public static void Select_Trip(String trip, WebDriver driver) {
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
