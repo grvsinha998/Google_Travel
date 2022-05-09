@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="58856b53-92e7-44ac-96a8-b50cc5fdce92" name="Changes" comment="Day 1">
+      <change afterPath="$PROJECT_DIR$/src/main/Explore.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Home_Page.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Flights.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Flights.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Sandbox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Sandbox.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +24,7 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -40,9 +44,22 @@
     "RunOnceActivity.ShowReadmeOnStart": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.Flights">
+  <component name="RunManager" selected="Application.Home_Page">
     <configuration name="Flights" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Flights" />
+      <module name="Google_Travel" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Home_Page" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main.Home_Page" />
       <module name="Google_Travel" />
       <extension name="coverage">
         <pattern>
@@ -69,8 +86,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Flights" />
+        <item itemvalue="Application.Home_Page" />
         <item itemvalue="Application.Sandbox" />
+        <item itemvalue="Application.Flights" />
       </list>
     </recent_temporary>
   </component>
@@ -90,7 +108,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652034448344</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Day 1">
+      <created>1652034681811</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1652034681811</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
