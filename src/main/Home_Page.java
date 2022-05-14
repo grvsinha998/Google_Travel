@@ -60,9 +60,8 @@ public class Home_Page {
         Thread.sleep(5000);
 
         Set<String> windows = driver.getWindowHandles();
-        Iterator<String> it = windows.iterator();
-        while (it.hasNext()) {
-            driver.switchTo().window(it.next());
+        for (String window : windows) {
+            driver.switchTo().window(window);
             System.out.println(driver.getTitle());
         }
     }
