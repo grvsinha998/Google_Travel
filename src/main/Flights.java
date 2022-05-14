@@ -20,12 +20,16 @@ public class Flights {
         WebDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
-        driver.get("https://www.google.com/travel/");
+        driver.get("https://www.google.com/travel/flights/");
 
         Check_advisory(driver);
 
         Select_Trip("One way",driver);
-        Itinerary("IXR","BLR","15","June",driver);
+        Number_of_passengers(3,1,0,driver);
+        Seating_Class("Premium economy",driver);
+        Itinerary("IXR","BLR","October,19",driver);
+
+        Fetch_Flights(driver);
 
         driver.quit();
     }
@@ -44,14 +48,12 @@ public class Flights {
         }
 
         else {
-            driver.navigate().refresh();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@role='heading'][text()='Travel']")));
+            System.out.println("No Travel Restrictions!");
         }
 
     }
     public static void Select_Trip(String trip, WebDriver driver) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.findElement(By.xpath("//div[@class='PH4Kgc']/span[text()='Flights']")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='Eo39gc'][text()='Flights']")));
 
         driver.findElement(By.xpath("//div[@class='RLVa8 GeHXyb']")).click();
@@ -67,49 +69,76 @@ public class Flights {
         }
         Thread.sleep(3000);
     }
-    public static void Itinerary(String Origin, String Destination, String in_date, String in_month, WebDriver driver) throws InterruptedException {
+    public static void Number_of_passengers(int Adults, int Children, int Infants, WebDriver driver) {
+        driver.findElement(By.xpath("(//span[@class='VfPpkd-kBDsod UmgCUb'])[2]")).click();
+
+        int i,j,k;
+        i=j=k=0;
+
+        while (i<Adults-1) {
+            driver.findElement(By.xpath("//button[@aria-label='Add adult']")).click();
+            i++;
+        }
+        while (j<Children) {
+            driver.findElement(By.xpath("//button[@aria-label='Add child']")).click();
+            j++;
+        }
+        while (k<Infants) {
+            driver.findElement(By.xpath("//button[@aria-label='Add infant in seat']")).click();
+            k++;
+        }
+
+        driver.findElement(By.xpath("(//span[text()='Done'])[1]")).click();
+
+    }
+    public static void Seating_Class(String Seat, WebDriver driver) {
+        driver.findElement(By.xpath("//button[@aria-label='Economy, Change seating class.']")).click();
+
+        List<WebElement> Seats = driver.findElements(By.xpath("//ul[@aria-label='Select your preferred seating class.']/li"));
+        for (WebElement seat_web : Seats) {
+            String Seat_list = seat_web.getText();
+            if (Seat_list.contains(Seat)) {
+                seat_web.click();
+                break;
+            }
+        }
+    }
+    public static void Itinerary(String Origin, String Destination, String Departure_Date, WebDriver driver) throws InterruptedException {
         /*
         Origin & Destination - Use IATA codes (https://www.prokerala.com/travel/airports/india/)
          */
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         Actions axn = new Actions(driver);
 
-        WebElement Dest_searchbar = driver.findElement(By.xpath("(//input[@jsname='yrriRe'])[3]"));
-        axn.moveToElement(Dest_searchbar).doubleClick().build().perform();
-        Dest_searchbar.sendKeys(Destination);
+        WebElement Origin_searchbar = driver.findElement(By.xpath("(//input[@jsname='yrriRe'])[1]"));
+        axn.moveToElement(Origin_searchbar).doubleClick().sendKeys(Origin).build().perform();
+        driver.findElement(By.xpath("(//li[@class='n4HaVc '])[1]")).click();
         Thread.sleep(1000);
 
-//        List<WebElement> options = driver.findElements(By.cssSelector("li[class='ui-menu-item'] a"));
-//        for(WebElement option :options)
-//        {
-//            if(option.getText().equalsIgnoreCase(country))
-//            {
-//                option.click();
-//                break;
-//            }
-//        }
+        WebElement Dest_searchbar = driver.findElement(By.xpath("(//input[@jsname='yrriRe'])[3]"));
+        axn.moveToElement(Dest_searchbar).doubleClick().sendKeys(Destination).build().perform();
+        driver.findElement(By.xpath("(//li[@class='n4HaVc '])[1]")).click();
+        Thread.sleep(1000);
 
-//        Thread.sleep(1000);
+        WebElement Date_bar = driver.findElement(By.xpath("(//div[@class='GpDmDb q5Vmde'])[1]"));
+        axn.moveToElement(Date_bar).click().sendKeys(Departure_Date).sendKeys(Keys.ENTER).build().perform();
+        driver.findElement(By.xpath("(//span[text()='Done'])[2]")).click();
+        Thread.sleep(1000);
+    }
+    public static void Fetch_Flights(WebDriver driver) throws InterruptedException {
+        Actions axn = new Actions(driver);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h3[contains(text(),'flights')]")));
 
-//        driver.findElement(By.xpath("(//div[@jsname='yrriRe'])[3]")).click();
+        WebElement expand_button = driver.findElement(By.xpath("//button[@jsname='ornU0b']"));
+        if (expand_button.isDisplayed()) {
+            axn.moveToElement(expand_button).click().build().perform();
+        }
 
-//        String mpath = "//div[@class='BgYkof L62Kqc qZwLKe']";
-//        String dpath = "//div[@class='BgYkof L62Kqc qZwLKe']/parent::div//div[@jsname='Mgvhmd']/div/div/div/div";
-//
-//        List<WebElement> months = driver.findElements(By.xpath(mpath));
-//        for (WebElement month : months) {
-//            String element = month.getText();
-//            if (element.contains(in_month)) {
-//                List<WebElement> dates = driver.findElements(By.xpath(dpath));
-//                for (WebElement date : dates) {
-//                    String element_d = date.getText();
-//                    if (element_d.contains(in_date)) {
-//                        driver.findElement(By.xpath(dpath)).click();
-//                        System.out.println(driver.findElement(By.xpath(dpath)).getText());
-//                    }
-//                }
-//            }
-//        }
+        Thread.sleep(5000);
+
+        int Flights = driver.findElements(By.xpath("//div[@jsname='lwc3Jf']")).size();
+        System.out.println(Flights);
     }
 
 }
