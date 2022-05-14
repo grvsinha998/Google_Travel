@@ -1,14 +1,18 @@
 package main;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class Home_Page {
@@ -20,10 +24,7 @@ public class Home_Page {
         driver.get("https://www.google.com/travel/");
 
         Check_advisory(driver);
-        Options("Explore",driver);
-//        Options("Things to do",driver);
-        Options("Flights",driver);
-//        Options("Hotels",driver);
+        Check_all_Options(driver);
 
         driver.quit();
 
@@ -46,20 +47,23 @@ public class Home_Page {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@role='heading'][text()='Travel']")));
         }
     }
-    public static void Options(String type,WebDriver driver) throws InterruptedException {
+    public static void Check_all_Options(WebDriver driver) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebElement SideBar = driver.findElement(By.xpath("//nav[@class='rlGvde']"));
+        Actions axn = new Actions(driver);
 
-        List<WebElement> options = driver.findElements(By.xpath("//div[@class='PH4Kgc']/span"));
-        int i=0;
-        while (i<options.size()) {
-            String option = options.get(i).getText();
-            if (option.contains(type)) {
-                options.get(i).click();
-                Thread.sleep(10000);
-                driver.findElement(By.xpath("//span[@jsname='iSelEd'][text()='Travel']")).click();
-                wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@role='heading'][text()='Travel']")));
-            }
-            i++;
+        List<WebElement> Tabs = SideBar.findElements(By.xpath("//nav[@class='rlGvde']//a"));
+        for (int i=1;i<Tabs.size();i++) {
+            axn.moveToElement(Tabs.get(i)).keyDown(Keys.COMMAND).click().build().perform();
+        }
+
+        Thread.sleep(5000);
+
+        Set<String> windows = driver.getWindowHandles();
+        Iterator<String> it = windows.iterator();
+        while (it.hasNext()) {
+            driver.switchTo().window(it.next());
+            System.out.println(driver.getTitle());
         }
     }
 }
