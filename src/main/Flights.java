@@ -25,7 +25,7 @@ public class Flights {
         Check_advisory(driver);
 
         Select_Trip("One way",driver);
-        Itinerary("BLR","Bengaluru","15","June",driver);
+        Itinerary("IXR","BLR","15","June",driver);
 
         driver.quit();
     }
@@ -75,7 +75,7 @@ public class Flights {
         Actions axn = new Actions(driver);
 
         WebElement Dest_searchbar = driver.findElement(By.xpath("(//input[@jsname='yrriRe'])[3]"));
-        axn.moveToElement(Dest_searchbar).doubleClick();
+        axn.moveToElement(Dest_searchbar).doubleClick().build().perform();
         Dest_searchbar.sendKeys(Destination);
         Thread.sleep(1000);
 
