@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58856b53-92e7-44ac-96a8-b50cc5fdce92" name="Changes" comment="Day 1" />
+    <list default="true" id="58856b53-92e7-44ac-96a8-b50cc5fdce92" name="Changes" comment="Day 1">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Flights.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Flights.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Sandbox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Sandbox.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -81,8 +85,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Flights" />
-        <item itemvalue="Application.Home_Page" />
         <item itemvalue="Application.Sandbox" />
+        <item itemvalue="Application.Home_Page" />
       </list>
     </recent_temporary>
   </component>

@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -25,11 +26,12 @@ public class Flights {
         Check_advisory(driver);
 
         Select_Trip("One way",driver);
-        Number_of_passengers(3,1,0,driver);
-        Seating_Class("Premium economy",driver);
-        Itinerary("IXR","BLR","October,19",driver);
+        Number_of_passengers(3,0,0,driver);
+        Seating_Class("Economy",driver);
+        Itinerary("BLR","DEL","June,16",driver);
 
         Fetch_Flights(driver);
+        Fetch_Cheapest_Fare(driver);
 
         driver.quit();
     }
@@ -138,7 +140,26 @@ public class Flights {
         Thread.sleep(5000);
 
         int Flights = driver.findElements(By.xpath("//div[@jsname='lwc3Jf']")).size();
-        System.out.println(Flights);
+        System.out.println("Flights Available: " + Flights);
+    }
+    public static void Fetch_Cheapest_Fare(WebDriver driver) {
+        List<Integer> price = new ArrayList<Integer>(5);
+
+        List<WebElement> Prices = driver.findElements(By.xpath("//div[@class='U3gSDe']/div/div/span"));
+        for (WebElement Price_web: Prices) {
+            String[] split = Price_web.getText().split("₹");
+            String[] money = split[1].split(",");
+            int cost = Integer.parseInt(money[0]+money[1]);
+            price.add(cost);
+        }
+
+        int min = price.get(0);
+        for (Integer integer : price) {
+            if (integer < min) {
+                min = integer;
+            }
+        }
+        System.out.println("Lowest Fare: ₹"+min);
     }
 
 }
