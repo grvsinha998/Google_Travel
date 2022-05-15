@@ -26,11 +26,12 @@ public class Flights {
         Check_advisory(driver);
 
         Select_Trip("One way",driver);
-        Number_of_passengers(3,0,0,driver);
+        Number_of_passengers(2,0,0,driver);
         Seating_Class("Economy",driver);
-        Itinerary("BLR","DEL","June,16",driver);
+        Itinerary("IXR","BLR","May,18",driver);
 
         Fetch_Flights(driver);
+        Fetch_Non_Stop_Flights(driver);
         Fetch_Cheapest_Fare(driver);
 
         driver.quit();
@@ -140,12 +141,17 @@ public class Flights {
         Thread.sleep(5000);
 
         int Flights = driver.findElements(By.xpath("//div[@jsname='lwc3Jf']")).size();
+        System.out.println("URL: " + driver.getCurrentUrl());
         System.out.println("Flights Available: " + Flights);
     }
-    public static void Fetch_Cheapest_Fare(WebDriver driver) {
+    public static void Fetch_Non_Stop_Flights(WebDriver driver) throws InterruptedException {
+        List<WebElement> flights = driver.findElements(By.xpath("//span[@aria-label='Nonstop flight.']"));
+        System.out.println("Non-Stop Flights: " + flights.size());
+    }
+    public static void Fetch_Cheapest_Fare(WebDriver driver) throws InterruptedException {
+        List<WebElement> Prices = driver.findElements(By.xpath("//div[@class='U3gSDe']/div/div/span"));
         List<Integer> price = new ArrayList<Integer>(5);
 
-        List<WebElement> Prices = driver.findElements(By.xpath("//div[@class='U3gSDe']/div/div/span"));
         for (WebElement Price_web: Prices) {
             String[] split = Price_web.getText().split("₹");
             String[] money = split[1].split(",");
@@ -160,6 +166,7 @@ public class Flights {
             }
         }
         System.out.println("Lowest Fare: ₹"+min);
+        Thread.sleep(5000);
     }
 
 }
