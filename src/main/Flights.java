@@ -26,7 +26,7 @@ public class Flights {
         Check_advisory(driver);
 
         Select_Trip("One way",driver);
-        Number_of_passengers(2,0,0,driver);
+        Number_of_passengers(3,2,0,driver);
         Seating_Class("Economy",driver);
         Itinerary("IXR","BLR","May,18",driver);
 
