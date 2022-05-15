@@ -1,9 +1,11 @@
 package main;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -93,4 +95,27 @@ public class Explore {
             }
         }
     }
+    public static void Itinerary(String Origin, String Destination, String Departure_Date, WebDriver driver) throws InterruptedException {
+        /*
+        Origin & Destination - Use IATA codes (https://www.prokerala.com/travel/airports/india/)
+         */
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        Actions axn = new Actions(driver);
+
+        WebElement Origin_searchbar = driver.findElement(By.xpath("(//input[@jsname='yrriRe'])[1]"));
+        axn.moveToElement(Origin_searchbar).doubleClick().sendKeys(Origin).build().perform();
+        driver.findElement(By.xpath("(//li[@class='n4HaVc '])[1]")).click();
+        Thread.sleep(1000);
+
+        WebElement Dest_searchbar = driver.findElement(By.xpath("(//input[@jsname='yrriRe'])[3]"));
+        axn.moveToElement(Dest_searchbar).doubleClick().sendKeys(Destination).build().perform();
+        driver.findElement(By.xpath("(//li[@class='n4HaVc '])[1]")).click();
+        Thread.sleep(1000);
+
+        WebElement Date_bar = driver.findElement(By.xpath("(//div[@class='GpDmDb q5Vmde'])[1]"));
+        axn.moveToElement(Date_bar).click().sendKeys(Departure_Date).sendKeys(Keys.ENTER).build().perform();
+        driver.findElement(By.xpath("(//span[text()='Done'])[2]")).click();
+        Thread.sleep(1000);
+    }
+
 }
