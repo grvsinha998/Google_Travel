@@ -10,7 +10,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class Explore {
@@ -26,6 +29,10 @@ public class Explore {
         Select_Trip("One way",driver);
         Number_of_passengers(3,2,0,driver);
         Seating_Class("Economy",driver);
+        Itinerary("IXR","BBI",driver);
+
+        Climate_View(driver);
+        Fetch_Top_Sights(driver);
 
         driver.quit();
     }
@@ -95,7 +102,7 @@ public class Explore {
             }
         }
     }
-    public static void Itinerary(String Origin, String Destination, String Departure_Date, WebDriver driver) throws InterruptedException {
+    public static void Itinerary(String Origin, String Destination, WebDriver driver) throws InterruptedException {
         /*
         Origin & Destination - Use IATA codes (https://www.prokerala.com/travel/airports/india/)
          */
@@ -111,11 +118,48 @@ public class Explore {
         axn.moveToElement(Dest_searchbar).doubleClick().sendKeys(Destination).build().perform();
         driver.findElement(By.xpath("(//li[@class='n4HaVc '])[1]")).click();
         Thread.sleep(1000);
-
-        WebElement Date_bar = driver.findElement(By.xpath("(//div[@class='GpDmDb q5Vmde'])[1]"));
-        axn.moveToElement(Date_bar).click().sendKeys(Departure_Date).sendKeys(Keys.ENTER).build().perform();
-        driver.findElement(By.xpath("(//span[text()='Done'])[2]")).click();
-        Thread.sleep(1000);
     }
+    public static void Climate_View(WebDriver driver) {
+        List<WebElement> seasons = driver.findElements(By.xpath("//div[@class='YMlIz uDebTe']"));
+        String Peak_Season = seasons.get(0).getText();
+        String Off_Season = seasons.get(1).getText();
 
+        System.out.println("Peak Season: " + Peak_Season);
+        System.out.println("Off Season: " + Off_Season);
+
+        List<WebElement> months = driver.findElements(By.xpath("(//div[@class='QB2Jof tZ9pnb'])"));
+        List<WebElement> max_temps = driver.findElements(By.xpath("(//div[@class='QB2Jof tZ9pnb'])//parent::div//div[@class='CQYfx ZT3Rad']//div[@class='CQYfx rPEONb']"));
+        List<WebElement> min_temps = driver.findElements(By.xpath("(//div[@class='QB2Jof tZ9pnb'])//parent::div//div[@class='CQYfx ZT3Rad']//div[@class='CQYfx U1XZ2e']"));
+
+        for (int i = 0; i < 3; i++) {
+            String month = months.get(i).getText();
+            String max_temp = max_temps.get(i).getText();
+            String min_temp = min_temps.get(i).getText();
+
+            System.out.println(month + ": Max Temp: " + max_temp + " | " + "Min Temp: " + min_temp);
+        }
+    }
+    public static void Fetch_Top_Sights(WebDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        Actions axn = new Actions(driver);
+
+        WebElement View_Sites_Button = driver.findElement(By.xpath("//a[@aria-label='View more things to see and do']"));
+        axn.moveToElement(View_Sites_Button).keyDown(Keys.COMMAND).click().build().perform();
+
+        Set<String> windows = driver.getWindowHandles();
+        Iterator<String> it = windows.iterator();
+        String parentID = it.next();
+        String childID = it.next();
+        driver.switchTo().window(childID);
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@class='sUF6Ec'])[1]")));
+
+        List<WebElement> places = driver.findElements(By.xpath("//div[@class='skFvHc YmWhbc']"));
+        List<String> list_places = new ArrayList<String>(5);
+        for (WebElement place_web: places) {
+            String place = place_web.getText();
+            list_places.add(place);
+        }
+        System.out.println("Top Sights to visit: " + list_places);
+    }
 }
