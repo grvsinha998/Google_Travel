@@ -29,7 +29,7 @@ public class Explore {
         Select_Trip("One way",driver);
         Number_of_passengers(3,2,0,driver);
         Seating_Class("Economy",driver);
-        Itinerary("IXR","BBI",driver);
+        Itinerary("IXR","BLR",driver);
 
         Climate_View(driver);
         Fetch_Top_Sights(driver);
